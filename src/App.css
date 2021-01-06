@@ -1,0 +1,9 @@
+.App {
+  text-align: center;
+}
+
+.searchButton {
+  background-color: gray;
+  display: inline-block;
+  margin-left: 20px;
+}
