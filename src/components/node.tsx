@@ -1,16 +1,36 @@
-import React from 'react'
+import React, {useState} from 'react'
+import styled from 'styled-components'
+import closedFolder from '../images/closedFolder.svg'
+import openFolder from '../images/openFolder.svg'
+import file from '../images/file.svg'
+import { Node } from '../type'
+import './node.css'
 
 type NodeProps = {
     collapsed?: boolean;
-    nodeLabel?: string;
-    children?: Node[];
-    message: string;
+    depth: number;
+    node: Node;
 }
 
-function Node(props: NodeProps) {
+function NodeComponent(props: NodeProps) {
+
     return (
-        <div>{props.message}</div>
+        <React.Fragment>
+            <div className="item">
+                <div style={{width: `${props.depth * 15}px`}}></div>
+                <img className="itemIcon" 
+                src={props.node.type === 'directory'? closedFolder: file} 
+                alt="icon"/>
+                <div className="itemText">{props.node.id}</div>
+            </div>
+            <React.Fragment>
+                {Object.keys(props.node.children)
+                .map((key, index) => 
+                <NodeComponent key={`item-${index}`} node={props.node.children[key]} depth={props.depth + 1} />)}
+            </React.Fragment>
+        </React.Fragment>
+
     )
   }
   
-  export default Node
+  export default NodeComponent

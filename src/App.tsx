@@ -1,5 +1,6 @@
 import React from 'react';
 import { Node } from './type'
+import NodeComponent from './components/node'
 import { process_searchTerm } from './commands';
 import './App.css';
 
@@ -23,42 +24,37 @@ const n: Node2 = {
 }
 */
 
-function NodePreview({ node, depth } : { node: Node, depth: number }) {
-    return (<div style={{marginLeft: `${depth * 20}px` }}>
-        {node.id}
-        {Object.keys(node.children).map(key => <NodePreview node={node.children[key]} depth={depth + 1} />)}
-    </div>)
-}
-
 function App() {
     const [searchTerm, setSearchTerm] = React.useState<String>("");
     const [treeData, setTreeData] = React.useState<Node>({id: '/', type: "directory", children: {}});
 
-    console.log(treeData)
     return (
         <div className="App">
             <header className="App-header">
                 File system GUI
             </header>
-            <div> element </div>
-            <input type='text'
-                onChange={event => setSearchTerm(event.target.value)}
-                onKeyDown={event => {
-                    if (event.key === "Enter" && searchTerm.split(" ").length === 3) {
-                        process_searchTerm(searchTerm, treeData, setTreeData)
-                    }
-                }}>
-            </input>
-            <div className={'searchButton'}
-                onClick={() => {
-                    if (searchTerm.split(" ").length === 3) {
-                        process_searchTerm(searchTerm, treeData, setTreeData)
-                    } else {
-                        alert('Unknown command')
-                    }
-            }}>search
+            <div className="commandInput">
+                <div> Input command here: </div>
+                <input type='text'
+                    onChange={event => setSearchTerm(event.target.value)}
+                    onKeyDown={event => {
+                        if (event.key === "Enter" && searchTerm.split(" ").length === 3) {
+                            process_searchTerm(searchTerm, treeData, setTreeData)
+                        }
+                    }}>
+                </input>
+                <div className={'searchButton'}
+                    onClick={() => {
+                        if (searchTerm.split(" ").length === 3) {
+                            process_searchTerm(searchTerm, treeData, setTreeData)
+                        } else {
+                            alert('Unknown command')
+                        }
+                }}>Execute
+                </div>    
             </div>
-            <NodePreview node={treeData} depth={0} />
+            
+            <NodeComponent node={treeData} depth={1} />
         </div>
     );
 }

@@ -1,0 +1,14 @@
+.itemIcon {
+    width: 15px;
+    height: 15px;
+}
+
+.item {
+    display: flex;
+    margin-top: 5px;
+
+}
+
+.itemText {
+    margin-left: 5px;
+}
