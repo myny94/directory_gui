@@ -7,9 +7,9 @@ import { Node } from '../type'
 import './node.css'
 
 type NodeProps = {
-    collapsed?: boolean;
     depth: number;
     node: Node;
+    link?: string;
 }
 
 function NodeComponent(props: NodeProps) {
