@@ -36,7 +36,7 @@ export function add_command(objectType: "directory" | "file", fullPath: String, 
     return nextTreeData
 }
 
-export function delete_command(objectType: "directory" | "file", fullPath: String, treeData: Node): Node | undefined {
+export function delete_command(objectType: "directory" | "file", fullPath: String, treeData: Node): Node {
     // if the path ends with slash, prevent deleting file/directory with empty name
     const pathArray = fullPath.slice(-1) === "/" ? fullPath.slice(0, -1) : fullPath;
 
@@ -75,7 +75,7 @@ export function delete_command(objectType: "directory" | "file", fullPath: Strin
     return nextTreeData
 }
 
-export function move_command(searchTerm: String, treeData: Node): Node | undefined {
+export function move_command(searchTerm: String, treeData: Node): Node {
     const split_searchTerm = searchTerm.split(" ");
     const fromPath = split_searchTerm[1];
     const toPath = split_searchTerm[2];
@@ -114,7 +114,6 @@ export function move_command(searchTerm: String, treeData: Node): Node | undefin
                 currentNode = currentNode.children[id];
             }
         }
-
     });
 
     return nextTreeData;
