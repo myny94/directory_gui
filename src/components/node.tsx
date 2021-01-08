@@ -9,7 +9,7 @@ import './node.css'
 type NodeProps = {
     depth: number;
     node: Node;
-    link?: string;
+    link?: boolean
 }
 
 function NodeComponent(props: NodeProps) {
@@ -17,7 +17,7 @@ function NodeComponent(props: NodeProps) {
     return (
         <React.Fragment>
             <div className="item">
-                <div style={{width: `${props.depth * 15}px`}}></div>
+                <div style={{width: `${props.depth * 15}px`, backgroundColor: props.link ? 'gray':'white' }}></div>
                 <img className="itemIcon" 
                 src={props.node.type === 'directory'? closedFolder: file} 
                 alt="icon"/>
@@ -26,7 +26,7 @@ function NodeComponent(props: NodeProps) {
             <React.Fragment>
                 {Object.keys(props.node.children)
                 .map((key, index) => 
-                <NodeComponent key={`item-${index}`} node={props.node.children[key]} depth={props.depth + 1} />)}
+                <NodeComponent key={`item-${index}`} node={props.node.children[key]} depth={props.depth + 1} link={props.link}/>)}
             </React.Fragment>
         </React.Fragment>
 

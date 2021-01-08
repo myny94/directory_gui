@@ -27,7 +27,7 @@ const n: Node2 = {
 function App() {
     const [searchTerm, setSearchTerm] = React.useState<String>("");
     const [treeData, setTreeData] = React.useState<Node>({id: '/', type: "directory", children: {}});
-
+    
     return (
         <div className="App">
             <header className="App-header">
@@ -40,6 +40,8 @@ function App() {
                     onKeyDown={event => {
                         if (event.key === "Enter" && searchTerm.split(" ").length === 3) {
                             process_searchTerm(searchTerm, treeData, setTreeData)
+                            console.log(treeData)
+                            setSearchTerm("")
                         }
                     }}>
                 </input>
@@ -47,10 +49,19 @@ function App() {
                     onClick={() => {
                         if (searchTerm.split(" ").length === 3) {
                             process_searchTerm(searchTerm, treeData, setTreeData)
+                            setSearchTerm("")
                         } else {
                             alert('Unknown command')
                         }
                 }}>Execute
+                </div>
+                <div className={'searchButton'}
+                    onClick={() => {
+                        setTreeData({
+                            id: "/",
+                            type: 'directory',
+                            children: {}})
+                }}>Clear tree
                 </div>    
             </div>
             

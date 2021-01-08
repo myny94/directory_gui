@@ -3,4 +3,6 @@ export type Node = {
     type: 'directory' | 'file'
     children: { [key: string]: Node }
     property?: string
+    redirect?: string
+    link?: boolean
 }
