@@ -3,29 +3,11 @@ import { Node } from './type'
 import NodeComponent from './components/node'
 import { process_searchTerm } from './commands';
 import './App.css';
-
-/*
-const n: Node2 = {
-    id: "/",
-    type: 'directory',
-    children: {
-        "c/": {
-            id: "c/"
-            type: "directory"
-            children: {
-                "d": {
-                    id: "d",
-
-                }
-            }
-        },
-        "c": 
-    }
-}
-*/
+import manual from './images/instructions.svg'
+import alertImage from './images/alert.svg'
 
 function App() {
-    const [searchTerm, setSearchTerm] = React.useState<String>("");
+    const [searchTerm, setSearchTerm] = React.useState<string>("");
     const [treeData, setTreeData] = React.useState<Node>({id: '/', type: "directory", children: {}});
     
     return (
@@ -36,18 +18,18 @@ function App() {
             <div className="commandInput">
                 <div> Input command here: </div>
                 <input type='text'
+                    value={searchTerm}
                     onChange={event => setSearchTerm(event.target.value)}
                     onKeyDown={event => {
                         if (event.key === "Enter" && searchTerm.split(" ").length === 3) {
                             process_searchTerm(searchTerm, treeData, setTreeData)
-                            console.log(treeData)
                             setSearchTerm("")
                         }
                     }}>
                 </input>
                 <div className={'searchButton'}
                     onClick={() => {
-                        if (searchTerm.split(" ").length === 3) {
+                        if (searchTerm.split(" ").length === 3) {    
                             process_searchTerm(searchTerm, treeData, setTreeData)
                             setSearchTerm("")
                         } else {
@@ -63,6 +45,16 @@ function App() {
                             children: {}})
                 }}>Clear tree
                 </div>    
+            </div>
+            <div className="userManual">
+                <div className="manualHeader"><img src={manual} className="manualPhoto"/> User manual</div>
+                <li>Adding directory/file: "Add directory/file path"</li>
+                <li>Deleting directory/file: "Delete directory/file path"</li>
+                <li>Moving directory/file: "Move (path to move from) (path to move to)"</li>
+                <div className="manualHeader"><img src={alertImage} className="manualPhoto"/> Exceptions </div>
+                <li>Creating or moving a file/directory inside non-existing directory will create directories recursively </li>
+                <li>Creating file or directory with a duplicated name(path) is not possible.</li>
+                <li>Deleting wrong type of data or non-existing data is not possible</li> 
             </div>
             
             <NodeComponent node={treeData} depth={1} />
